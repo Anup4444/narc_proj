@@ -1,0 +1,180 @@
+{% extends "basedashboard.html" %}
+{% block content %}
+
+<div class="grid grid-cols-6">
+    <div class=" h-full hidden md:block">
+        <!-- <SideBar3 /> -->
+        <div class="shadow sticky top-[3.5rem]  pt-5">
+            <div class="flex  items-center ml-3">
+                <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24" alt="">
+                </div>
+                <div class="  ml-4 font-bold text-2xl md:text-xl text-green-600">Menu</div>
+            </div>
+            <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                <div class=" gap-4 flex flex-col  mt-3 lg:p-6 p-2 ">
+
+                    <a href="{{url_for('dashboards.dashboard')}}">  <button
+                        class="md:text-[10px]  lg:text-[15px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                    font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg ">
+                        <span class="mr-3 "><img src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                alt=""></span>
+                        Dashboard
+                    </button></a>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- <SideBar3 /> -->
+    </div>
+
+
+    <div class="col-span-6 m-5 md:col-span-5 ">
+        {% if message %}
+        <center>{{ message }}</center>
+        {% endif %}
+        <!--  -->
+
+        <div id="sidebar"
+            class="flex-col mt-14 md:hidden flex sidebar bg-white text-white w-64 h-full fixed top-0 left-0 transform -translate-x-full transition duration-300 ease-in-out">
+            <button id="closeSidebarButton"
+                class="ml-[14rem] mt-2 bg-red-500 hover:bg-red-700 h-6 text-white font-bold w-5  rounded">
+                X
+            </button>
+            <div>
+                <div class="       shadow  pt-5">
+                    <div class="flex  items-center ml-3">
+                        <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24"
+                                alt=""></div>
+                        <div class="  ml-4 font-bold text-2xl  text-green-600">Menu</div>
+
+                    </div>
+                    <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                        <div class=" gap-4 flex flex-col  items-center  mt-3  p-2 ">
+
+                            <a href="{{url_for('dashboards.dashboard')}}">  <button
+                                class=" md:text-[10px]  lg:text-[14px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                      font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100    px-6  p-3  rounded-lg ">
+                                <span class="mr-2 "><img src="{{ url_for('static', filename='images/webpage.png') }}"
+                                        width="25" alt=""></span>
+                               Dashboard
+                            </button></a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!--  -->
+
+        <div class="w-full  bg-white p-6 rounded-lg shadow-xl">
+
+            <div class="flex gap-4 mb-4 -ml-4 md:ml-0">
+
+
+                <button id="openSidebarButton"
+                    class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                    <div class=" pl-2 hover:w-26"><img src="{{ url_for('static', filename='images/more.png') }}"
+                            width="28" alt=""></div>
+                </button>
+                <h2 class="text-2xl  font-semibold ">Setup Form :</h2>
+
+
+            </div>
+            <div class="centered border-2">
+                <canvas id="formsChart" width="150" height="50"></canvas>
+            </div>
+
+            <!--  -->
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                var ctx = document.getElementById('formsChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: {{ dates|tojson|safe }},
+                        datasets: [{
+                            label: 'Forms Submitted',
+                            data: {{ counts|tojson|safe }},
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Number of Forms Submitted Day-wise',
+                                font: {
+                                    size: 20
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                    
+                    
+                });
+                </script>
+            
+            
+                <style>
+                    .centered {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 80vh;  /* Adjust this value based on your needs */
+                        background-color: rgba(240, 240, 240, 0.8); /* Light gray background */
+                        padding: 20px;
+                        border-radius: 15px; /* Optional: rounded corners */
+                        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+                    }
+                    
+                </style>
+
+            <!-- <script src="../static/script/host.js"></script>
+           <script src="../static/script/diagnosticTest.js"></script>
+           <script src="../static/script/suspectProblem.js"></script>
+           <script src="../static/script/SampleMaterialsSubmitted.js"></script> -->
+
+            <!--  -->
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const openSidebarButton = document.getElementById("openSidebarButton");
+        const closeSidebarButton = document.getElementById("closeSidebarButton");
+        const sidebar = document.getElementById("sidebar");
+
+        openSidebarButton.addEventListener("click", function () {
+            sidebar.classList.add("translate-x-0");
+        });
+
+        closeSidebarButton.addEventListener("click", function () {
+            sidebar.classList.remove("translate-x-0");
+        });
+    });
+</script>
+
+
+
+
+
+{% endblock %}

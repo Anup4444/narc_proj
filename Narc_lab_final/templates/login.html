@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+
+<body class="bg-cover bg-center relative" style="background-image: url('/static/images/land.jpg')">
+    <div>
+        <div class="bg-gradient-to-l from-green-600 flex items-center px-4 sm:px-8 py-2 h-14">
+            <div class="bg-white rounded-full h-12 w-14">
+                <img src="{{ url_for('static', filename='images/narc.png') }}" class="h-12 w-full" alt="" />
+            </div>
+            <div class="flex justify-between items-center w-full ml-4">
+                <div class="flex flex-col">
+                    <span class="text-white font-bold text-xs">NARC</span>
+                    <span class="text-white font-bold text-sm md:text-xl lg:text-2xl">National Plant Pathology Research Center</span>
+                </div>
+                <div>
+                    <img src="/static/images/gov.png" alt="" class="h-8 md:h-12 w-auto">
+                </div>
+            </div>
+        </div>
+        
+       
+
+        {% if message %}
+        <center class="absolute top-0 mt-4 w-full flex text-red-400 text-sm md:text-lg lg:text-xl">{{ message }}</center>
+        {% endif %}
+
+        <div class="mt-16 mx-auto max-w-5xl">
+            <div class="flex flex-col md:flex-row border rounded-md">
+                <div class="flex flex-col justify-center items-center p-6 w-full md:w-1/2 bg-gradient-to-l from-green-100 border-r-2">
+                    <img src="{{ url_for('static', filename='images/narc.png') }}" alt="NARC" class="w-24 lg:w-40">
+                    <span class="font-extrabold text-xl pt-4 md:text-2xl lg:text-3xl text-gray-700 text-center">Nepal Agricultural Research Council</span>
+                </div>
+                <div class="p-6 w-full md:w-1/2">
+                    <h2 class="font-bold text-2xl mb-4 text-white text-center">Login</h2>
+                    <form method="POST">
+                        <div class="mb-4">
+                            <label for="username" class="block text-white text-lg font-medium">Username :</label>
+                            <input type="text" id="username" name="username" class="mt-1 text-sm p-3 w-full border border-gray-500 rounded-md" required />
+                            <p id="usernameError" class="hidden text-red-500 text-sm mt-1">Username must contain only letters.</p>
+                        </div>
+                        <div class="mb-6">
+                            <label for="password" class="block text-white text-lg font-medium">Password :</label>
+                            <input type="password" id="password" name="password" class="mt-1 text-sm p-3 w-full border border-gray-500 rounded-md" required />
+                        </div>
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white text-xl p-2 font-semibold rounded-md">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-20 mb-2 text-center">
+            <span class="font-bold text-white block">All Rights Reserved @2023 NARC</span>
+            <span class="font-bold text-white block mt-1">Designed and Developed by <a class="hover:underline" href="https://kheti.farm/" target="_blank">DV EXCELLUS</a> | Kisan Care</span>
+        </div>
+
+
+        
+        <!-- Docs Link -->
+        <a href="{{url_for('dashboards.Document')}}" class="fixed bottom-4 right-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow-md">Docs</a>
+
+    </div>
+    </div>
+
+    <script>
+        document.getElementById('username').addEventListener('input', function(event) {
+            const usernameInput = event.target;
+            const errorElement = document.getElementById('usernameError');
+        
+            // Regular expression to check for letters only
+            const lettersOnlyRegex = /^[A-Za-z]+$/;
+            
+            if (!lettersOnlyRegex.test(usernameInput.value)) {
+                // If input is invalid, show the error message and apply error styling
+                errorElement.classList.remove('hidden');
+                usernameInput.classList.add('border-red-500');
+            } else {
+                // If input is valid, hide the error message and remove error styling
+                errorElement.classList.add('hidden');
+                usernameInput.classList.remove('border-red-500');
+            }
+        });
+    </script>        
+</body>
+
+</html>

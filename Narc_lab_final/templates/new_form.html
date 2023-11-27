@@ -1,0 +1,825 @@
+{% extends 'basedashboard.html' %}
+{% block content %}
+<div class="">
+
+
+    <div class="grid grid-cols-6 ">
+
+        <div class=" h-full hidden md:block">
+            <!-- <Sidebar2/> -->
+
+            <div class=" shadow sticky top-[3.5rem]  pt-5">
+                <div class="flex  items-center ml-3">
+                    <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24" alt="">
+                    </div>
+                    <div class="  ml-4 font-bold text-2xl md:text-xl text-green-600">Menu</div>
+                </div>
+                <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                    <div class=" gap-4 flex flex-col items-center  mt-3  p-2 ">
+
+                        <button
+                            class="md:text-[10px]  lg:text-[16px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                            font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg">
+                            <span class="mr-2 "><img src="{{ url_for('static', filename='images/webpage.png') }}"
+                                    width="25" alt=""></span>
+                            <a href="{{url_for('dashboards.dashboard')}}"> Dashboard</a>
+                        </button>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <Sidebar2/> -->
+        </div>
+
+        <div class="col-span-6 md:col-span-5 ">
+            <!--  -->
+
+            <div id="sidebar"
+                class="flex-col z-10 mt-14 md:hidden flex sidebar bg-white text-white w-64 h-full fixed top-0 left-0 transform -translate-x-full transition duration-300 ease-in-out">
+                <button id="closeSidebarButton"
+                    class="ml-[14rem] mt-2 bg-red-500 hover:bg-red-700 h-6 text-white font-bold w-5  rounded">
+                    X
+                </button>
+                <div>
+                    <div class="       shadow  pt-5">
+                        <div class="flex  items-center ml-3">
+                            <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24"
+                                    alt=""></div>
+                            <div class="  ml-4 font-bold text-2xl  text-green-600">Menu</div>
+
+                        </div>
+                        <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                            <div class=" gap-4 flex flex-col  items-center  mt-3  p-2 ">
+
+
+                                <button
+                                    class=" md:text-[10px]  lg:text-[14px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                 font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100    px-6  p-3  rounded-lg ">
+                                    <span class="mr-2 "><img
+                                            src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                            alt=""></span>
+                                    <a href="{{url_for('dashboards.dashboard')}}"> Dashboard</a>
+                                </button>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--  -->
+            <center> {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+                {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+                {% endfor %} {% endif %} {% endwith %}</center>
+            <div class="bg-blue-600 ">
+                <div class="bg-gray-100 lg:flex lg:justify-center  lg:w-full">
+                    <div class="lg:w-[98%] p-5 bg-white rounded-md  shadow-xl border-t-2 border-b-2 ">
+                        <div class="flex  items-center ">
+                            <!--  -->
+                            <div class="flex gap-4 mb-1 items-center w-full justify-between -ml-4 md:ml-0">
+
+
+                                <button id="openSidebarButton"
+                                    class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                                    <div class=" pl-2 hover:w-26"><img
+                                            src="{{ url_for('static', filename='images/more.png') }}" width="28" alt="">
+                                    </div>
+                                </button>
+                                <div>
+
+                                    <h2 class='  font-semibold lg:text-2xl text-xl'>National Plant Diagnostic
+                                        Information System </h2>
+                                </div>
+
+                                <!-- <div class=" mt-2 flex items-center">
+                                    <h2 class="font-semibold text-[15px] lg:text-[18px]">
+                                        Date<span class="text-red-500">*</span> :
+                                    </h2>
+                                    <div class="mt-1 ">
+                                        {{ form.date(class="text-[14px] ml-2 md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <hr class="mt-2">
+
+
+                        <form enctype="multipart/form-data" class="overflow-y-auto"
+                            action="{{ url_for('dashboards.new_form') }}" method="post">
+                            {{ form.hidden_tag() }}
+
+
+                            <hr class="mt-2" />
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-2">
+
+
+                                <div class="flex flex-col lg:flex-row lg:items-center ">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Center<span
+                                            class="text-red-500">*</span> :</span>
+                                    <div class="mt-1">
+                                        {{ form.labcenter(class="text-[14px] lg:ml-2 text-green-500 w-full lg:w-[22rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between  md:mt-0 mt-2">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Date<span
+                                            class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="mt-1">
+                                        {{ form.date(class="text-[14px] lg:ml-2 md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <hr class="mt-2" />
+                            <h3 class="text-xl font-semibold mt-3 mb-1">
+                                Diagnostics Required<span class="text-red-500">*</span>
+                            </h3>
+                            <hr class="" />
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mt-2">
+                                <div class="flex flex-col  lg:justify-between">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Diagnostic test :
+                                    </span>
+                                    <div class="mt-1">
+                                        {{ form.diagnostictest(class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col mt-2">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Suspected Problem :</span>
+                                    <div class="mt-1">
+                                        {{ form.suspectedproblem(class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col mt-2">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Host : </span>
+                                    <div class="mt-1">
+                                        {{ form.host(class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="mt-2" />
+                            <div class="mt-5">
+                                <div class="w-full bg-white rounded">
+
+                                    <button type="button" id="toggleButton"
+                                        class="bg-gradient-to-l from-green-600 bg-green-500 flex items-center hover:bg-green-700 transition-all duration-300 ease-in-out text-white px-4 py-2 text-xl rounded mr-2"
+                                        onclick="toggleContainer()">
+                                        Show Physical Sample ►
+
+                                    </button>
+
+                                    <div class="mt-4 hidden" id="container">
+                                        <div class="flex flex-col lg:flex-row lg:justify-between mt-4">
+                                            <div class="flex flex-col">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Field/Reference
+                                                    ID<span class="text-red-500">*</span> :</span>
+                                                <div class="pt-1">
+                                                    {{ form.field_reference_id( class="text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Sample
+                                                    source :</span>
+                                                <div class="pt-1">
+                                                    {{ form.sample_source(class="text-green-500 w-full lg:w-72 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" ) }}
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Sample
+                                                    Materials Submitted<span class="text-red-500">*</span> :
+                                                </span>
+                                                <div class="pt-1">
+                                                    {{ form.samplematerialssubmitted( class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center mt-2">
+                                            <div class=" ">
+                                                <h2 class="font-semibold text-[15px] lg:text-[18px]">
+                                                    Sample Collected<span class="text-red-500">*</span> :
+                                                </h2>
+                                                <div class="pt-1">
+                                                    {{ form.sample_collected_date(class="text-[14px] text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" ) }}
+
+                                                </div>
+                                            </div>
+                                            <div class="mt-2  md:mt-0">
+                                                <h2 class="font-semibold text-[15px] lg:text-[18px]">
+                                                    Physical Sample Received<span class="text-red-500">*</span> :
+                                                </h2>
+                                                <div class="pt-1">
+                                                    {{ form.physical_sample_received_date(class="text-[14px] text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" ) }}
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">District<span
+                                                        class="text-red-500">*</span> :
+                                                </span>
+                                                <div class="pt-1">
+                                                    {{ form.district( class="text-[14px] text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-2  md:mt-0">
+                                                <span
+                                                    class="font-semibold text-[15px] lg:text-[18px]">Province/State<span
+                                                        class="text-red-500">*</span> :
+                                                </span>
+                                                <div class="pt-1">
+                                                    {{ form.provincestate( class="text-[14px] text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" mt-3 mb-0">
+                                            <div class="lg:flex items-center justify-between">
+                                                <div class="">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Zip code
+                                                        :</span>
+                                                    <div class="pt-1">
+                                                        {{ form.zip_code(class="text-green-500 w-full lg:w-[14rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-2  md:mt-0 md:mt-0">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Altitude
+                                                        :</span>
+                                                    <div class="pt-1">
+                                                        {{ form.altitude(class="text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2  md:mt-0">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Latitude
+                                                        :</span>
+                                                    <div class="pt-1 ">
+                                                        {{ form.latitude(class="text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                    </div>
+                                                </div>
+                                                <div class="mt-2  md:mt-0">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Longitude
+                                                        :</span>
+                                                    <div class="pt-1">
+                                                        {{ form.longitude(class="text-green-500 w-full lg:w-[14rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex flex-col mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--  -->
+                            <hr class="mt-2" />
+                            <div class="mt-5">
+                                <div class="w-full bg-white rounded">
+
+                                    <button type="button" id="toggleButton2"
+                                        class="bg-gradient-to-l from-green-600 bg-green-500 flex items-center hover:bg-green-700 transition-all duration-300 ease-in-out text-white px-4 py-2 text-xl rounded mr-2"
+                                        onclick="toggleContainer2()">
+                                        Show Preserved ►
+
+                                    </button>
+
+                                    <div class="mt-4 hidden" id="container2">
+                                        <div class="flex flex-col lg:flex-row lg:justify-between mt-4">
+                                            <div class="flex flex-col ">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Specimen ID<span
+                                                        class="text-red-500">*</span> :</span>
+                                                <div class="pt-1">
+                                                    {{ form.specifem_id( class="text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                </div>
+                                            </div>
+                                            <!-- <div class="flex flex-col mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Specimen Preserved<span class="text-red-500">*</span> :</span>
+                                                <div class="pt-1">
+                                                    {{ form.sample_source(class="text-green-500 w-full lg:w-72 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" ) }}
+                                                </div>
+                                            </div> -->
+                                            <div class="flex flex-col mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Specimen Preserved
+                                                    <span class="text-red-500">*</span> :
+                                                </span>
+                                                <div class="pt-1">
+                                                    {{ form.specimenpreserved( class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col mt-2  md:mt-0">
+                                                <span class="font-semibold text-[15px] lg:text-[18px]">Storage
+                                                    Conditions<span class="text-red-500">*</span> :
+                                                </span>
+                                                <div class="pt-1">
+                                                    {{ form.storagecondition( class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="flex flex-col mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <hr class="mt-1 bg-gray-400 " /> -->
+                            <!--  -->
+
+                            <hr class="mt-2 bg-gray-400 " />
+
+                            <div class="flex flex-row items-center mt-0">
+                                <h3 class="text-xl font-semibold mt-4 mb-1 ">
+                                    Diagnostics & NPDN
+                                </h3>
+                                <h5 class="lg:ml-4 pt-3 md:ml-2 text-[15px] lg:text-[18px] font-semibold text-gray-500">
+                                    New Diagnosis/ ID Information || Diagnosis/ ID1
+                                </h5>
+                            </div>
+                            <hr class="mt-1" />
+
+                            <div class="lg:flex lg:items-center mt-4 lg:justify-between">
+                                <div class="lg:flex flex-col lg:flex-row lg:items-center">
+                                    <span class="font-semibold text-[15px] lg:text-[18px] lg:mr-2">
+                                        Diagnosis
+                                        name<span class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="pt-1">
+                                        {{ form.diagnosisname(class="text-[14px] text-green-500 w-full lg:w-[50rem] px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col mt-4 lg:flex-row lg:items-center ">
+                                <span class="font-semibold text-[15px] lg:text-[18px] lg:mr-2">Genus<span
+                                        class="text-red-500">*</span> :</span>
+                                <div class="pt-1 ">
+                                    {{ form.genus( class="text-[14px] text-green-500 w-full lg:w-[50rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:mt-2">
+                                <div class="mt-2 lg:flex-row">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]"> Species<span
+                                            class="text-red-500">*</span> :</span>
+                                    <div class="pt-1">
+                                        {{ form.genusspecies( class="text-[14px] text-green-500 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-semibold text-[14px] lg:text-[18px]">Sub-species<span
+                                            class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="pt-1">
+                                        {{ form.genussubspecies( class="text-[14px] text-green-500 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-semibold text-[14px]  lg:text-[18px]">Lab Methods<span
+                                            class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="pt-1">
+                                        {{ form.genuslabmethods( class="text-[14px] text-green-500 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col mt-4 lg:flex-row lg:items-center ">
+                                <span class="font-semibold text-[15px] lg:text-[18px] lg:mr-2">Nematode<span
+                                        class="text-red-500">*</span> : </span>
+                                <div class="pt-1 ">
+                                    {{ form.nematode( class="text-[14px] text-green-500 w-full lg:w-[50rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:mt-2">
+                                <div class="mt-2 lg:flex-row">
+                                    <span class="font-semibold text-[15px] lg:text-[18px]">Species<span
+                                            class="text-red-500">*</span> : </span>
+                                    <div class="pt-1">
+                                        {{ form.nematodespecies( class="text-[14px] text-green-500  px-2 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-semibold text-[14px] lg:text-[18px]">Sub-species<span
+                                            class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="pt-1">
+                                        {{ form.nematodesubspecies( class="text-[14px] text-green-500 px-2 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-semibold text-[14px]  lg:text-[18px]">Nematode extraction<span
+                                            class="text-red-500">*</span> :
+                                    </span>
+                                    <div class="pt-1">
+                                        {{ form.nematodeextraction( class="text-[14px] text-green-500 px-2 w-full lg:w-[18rem] py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mt-3" />
+
+                            <!--  -->
+                            <div class="mt-4">
+                                <!-- i have changed on this -->
+                                <button type="button" id="toggleButton6"
+                                    class="bg-gradient-to-l from-green-600 bg-green-500 flex items-center hover:bg-green-700 transition-all duration-300 ease-in-out text-white px-4 py-2 text-xl rounded mr-2"
+                                    onclick="toggleContainer6()">
+                                    Show Sample ►
+
+                                </button>
+
+                                <div id="container6" class="hidden">
+                                    <div class="flex justify-between lg:flex-row flex-col">
+
+
+
+
+                                        <div class="mt-2">
+                                            <div>
+                                                <span class="font-bold text-[14px]  lg:text-[15px]">Insects </span>
+                                            </div>
+                                            <div class="flex mt-3 flex-col  ">
+                                                <div class="">
+                                                    <span class="font-semibold text-[14px] text-gray-500">Name of
+                                                        Insect :</span>
+                                                    <br />
+                                                    {{form.insect_name( class="mt-1 text-green-500 w-full lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="font-semibold text-[15px] text-gray-500">Causing
+                                                        Damage :</span>
+                                                    <br />
+                                                    {{form.causing_damage_insect(class="text-[14px] mt-2 w-full lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="mt-2">
+                                                    <label for="message"
+                                                        class="block font-semibold mb-1 text-gray-500">Notes
+                                                        :</label>
+                                                    {{form.insect_notes(class="w-full lg:w-80 px-3 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+
+                                                </div>
+                                                <div>
+                                                    <div class="flex justify-between mt-4 mb-2">
+
+                                                        {{form.image_path_insect( class="bg-green-500 text-white w-full font-semibold text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-green-700")}}
+
+                                                    </div>
+                                                </div>
+                                                <hr class="mt-2" />
+                                            </div>
+                                        </div>
+
+
+
+
+                                        <div class="mt-3 ">
+                                            <div>
+                                                <span class="font-bold text-[15px]">Disease sypmtoms </span>
+                                            </div>
+                                            <div class="flex mt-3 flex-col  ">
+                                                <div class="">
+                                                    <span class="font-semibold text-[15px] text-gray-500">Name
+                                                        of Disease :</span>
+                                                    <br />
+
+                                                    {{form.disease_name(class="mt-1 text-green-500 w-full  lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="font-semibold text-[15px] text-gray-500">Causing
+                                                        Damage :</span>
+                                                    <br />
+                                                    {{form.causing_damage_disease( class="text-[14px] mt-2 w-full lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="mt-2">
+                                                    <label for="message"
+                                                        class="block font-semibold mb-1 text-gray-500">Notes
+                                                        :</label>
+
+                                                    {{form.disease_notes(class="w-full lg:w-80 px-3 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+
+
+                                            </div>
+                                            <div>
+                                                <div class="flex justify-between mt-4 mb-2">
+
+                                                    {{form.image_path_disease(class="bg-green-500 text-white w-full font-semibold text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-green-700")}}
+
+                                                </div>
+                                                <hr class="mt-2" />
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="mt-3">
+                                            <div>
+                                                <span class="font-bold text-[15px]">Weeds </span>
+                                            </div>
+                                            <div class="flex mt-3 flex-col  ">
+                                                <div class="">
+                                                    <span class="font-semibold text-[15px] text-gray-500">Name
+                                                        of Weeds :</span>
+                                                    <br />
+                                                    {{form.weeds_name(class="mt-1 text-green-500 w-full lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" )}}
+
+                                                </div>
+                                                <div class="pt-2">
+                                                    <span class="font-semibold text-[15px] text-gray-500">Causing
+                                                        Damage :</span>
+                                                    <br />
+                                                    {{form.causing_damage_weeds( class="text-[14px] mt-2 w-full lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="mt-2">
+                                                    <label for="message"
+                                                        class="block font-semibold mb-1 text-gray-500">Notes
+                                                        :</label>
+                                                    {{form.weeds_notes( class="w-full lg:w-80 px-3 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700")}}
+
+                                                </div>
+
+
+                                            </div>
+                                            <div>
+                                                <div class="flex justify-between mt-4 mb-2">
+
+
+
+                                                    {{form.image_path_weeds( class="bg-green-500 text-white w-full font-semibold text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-green-700")}}
+
+                                                </div>
+                                                <hr class="mt" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  -->
+
+                            <!--  -->
+                            <hr class="mt-3" />
+
+
+
+
+                            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between lg:mt-3">
+                                <div class="flex flex-col lg:flex-row mt-5 lg:items-center ">
+                                    <span class="font-semibold lg:text-[18px]  text-[14px]  ">Plant Population
+                                        :</span> {{ form.plant_population(class="text-green-500 lg:ml-2 pt-1 lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none
+                                                focus:ring focus:border-green-700") }}
+                                </div>
+                                <div class="flex flex-col lg:flex-row mt-3 lg:items-center">
+                                    <span class="font-semibold lg:text-[18px]  text-[14px]">Number of Good
+                                        Plants :
+                                    </span>
+                                    {{ form.good_plants(class="text-green-500 w-full lg:ml-2 lg:w-80 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                </div>
+                            </div>
+
+                            <!--  -->
+                            <hr class="mt-2" />
+                            <!-- <div class="mt-5">
+                                    <div class="w-full bg-white rounded">
+    
+                                        <button type="button" id="toggleButton3"
+                                            class="bg-gradient-to-l from-green-600 bg-green-500 flex items-center hover:bg-green-700 transition-all duration-300 ease-in-out text-white px-4 py-2 text-xl rounded mr-2"
+                                            onclick="toggleContainer3()">
+                                            Show Storage Conditions ►
+    
+                                        </button>
+    
+                                        <div class="mt-4 hidden" id="container3">
+                                            <div class="flex flex-col lg:flex-row lg:justify-between mt-4">
+                                                <div class="flex flex-col ">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Ultra-Low Temperature <span class="text-red-500">*</span> :</span>
+                                                    <div class="pt-1">
+                                                        {{ form.field_reference_id( class="text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col mt-2  md:mt-0">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Refrigerator<span class="text-red-500">*</span> :</span>
+                                                    <div class="pt-1">
+                                                        {{ form.sample_source(class="text-green-500 w-full lg:w-72 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700" ) }}
+                                                    </div>
+                                                </div>
+                                                <div class="flex flex-col mt-2  md:mt-0">
+                                                    <span class="font-semibold text-[15px] lg:text-[18px]">Room Temperature<span class="text-red-500">*</span> :
+                                                    </span>
+                                                    <div class="pt-1">
+                                                        {{ form.samplematerialssubmitted( class="text-[14px] text-green-500 w-full lg:w-72 xl:w-92 px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                
+    
+                                            <div class=" mt-2 mb-0">
+                                                <div class="lg:flex items-center justify-between">
+                                                    <div class="">
+                                                        <span class="font-semibold text-[15px] lg:text-[18px]">Preservatives<span class="text-red-500">*</span> 
+                                                            :</span>
+                                                        <div class="pt-1">
+                                                            {{ form.zip_code(class="text-green-500 w-full lg:w-[14rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                                        </div>
+                                                    </div>
+    
+                                                  
+                                                </div>
+                                            </div>
+    
+                                            <div class="flex flex-col mt-2"></div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            <!-- <hr class="mt-1 bg-gray-400 " /> -->
+                            <!--  -->
+
+
+                            <div class="mt-3 flex flex-col">
+                                <label for="message"
+                                    class="block font-semibold mb-1 lg:text-[18px]  text-[14px]">Remarks
+                                    :</label>
+                                <div class="mr-40">
+                                    {{ form.signature(class="w-full px-3 py-2 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700") }}
+                                    <div class="w-full flex justify-between">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mt-4 bg-gray-400 " />
+
+                            <div
+                                class="bg-opacity-95 backdrop-filter gap-4 flex justify-end p-2 rounded-md sticky bottom-0 bg-gray-00">
+                                <input name="temp_save" value="Save" type="submit"
+                                    class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700">
+
+
+                                <input name="finish" value="Finish" type="submit"
+                                    class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700">
+
+                            </div>
+
+                        </form>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script>
+    function toggleContainer() {
+        var container = document.getElementById('container');
+        var toggleButton = document.getElementById('toggleButton');
+
+        if (container.style.display === 'none' || container.style.display === '') {
+            container.style.display = 'block';
+            toggleButton.textContent = ' Hide Physical Sample ▼';
+        } else {
+            container.style.display = 'none';
+            toggleButton.textContent = ' Show Physical Sample ► ';
+        }
+    }
+
+    function toggleContainer2() {
+        var container2 = document.getElementById('container2');
+        var toggleButton2 = document.getElementById('toggleButton2');
+
+        if (container2.style.display === 'none' || container2.style.display === '') {
+            container2.style.display = 'block';
+            toggleButton2.textContent = ' Hide Preserved ▼';
+        } else {
+            container2.style.display = 'none';
+            toggleButton2.textContent = 'Show Preserved ► ';
+        }
+    }
+    // function toggleContainer3() {
+    //     var container3 = document.getElementById('container3');
+    //     var toggleButton3 = document.getElementById('toggleButton3');
+
+    //     if (container3.style.display === 'none' || container3.style.display === '') {
+    //         container3.style.display = 'block';
+    //         toggleButton3.textContent = ' Hide Storage Conditions ▼';
+    //     } else {
+    //         container3.style.display = 'none';
+    //         toggleButton3.textContent = 'Show Storage Conditions ► ';
+    //     }
+    // }
+    // 
+    function toggleContainer6() {
+        var container6 = document.getElementById('container6');
+        var toggleButton6 = document.getElementById('toggleButton6');
+
+        if (container6.style.display === 'none' || container6.style.display === '') {
+            container6.style.display = 'block';
+            toggleButton6.textContent = ' Hide  Sample ▼';
+        } else {
+            container6.style.display = 'none';
+            toggleButton6.textContent = ' Show  Sample ► ';
+        }
+    }
+    // 
+    document.addEventListener("DOMContentLoaded", function () {
+        const openSidebarButton = document.getElementById("openSidebarButton");
+        const closeSidebarButton = document.getElementById("closeSidebarButton");
+        const sidebar = document.getElementById("sidebar");
+
+        openSidebarButton.addEventListener("click", function () {
+            sidebar.classList.add("translate-x-0");
+        });
+
+        closeSidebarButton.addEventListener("click", function () {
+            sidebar.classList.remove("translate-x-0");
+        });
+
+
+
+        const validationConfig = {
+            field_reference_id: {
+                min: 0,
+                max: 99999,
+                errorMsg: 'enter a digit no more then 99999'
+            },
+            zip_code: {
+                min: 0,
+                max: 999999999,
+                errorMsg: 'enter a valid ZIP Code.'
+            },
+            altitude: {
+                min: -9999,
+                max: 9999,
+                errorMsg: 'enter between -9999 and 9999.'
+            },
+            latitude: {
+                min: -90,
+                max: 90,
+                errorMsg: 'enter between -90 and 90.'
+            },
+            longitude: {
+                min: -180,
+                max: 180,
+                errorMsg: 'enter between -180 and 180.'
+            },
+
+        };
+
+        // Function to perform validation
+        function validateField(id) {
+            const inputField = document.getElementById(id);
+            const errorElement = document.createElement('p');
+            errorElement.style.color = 'red';
+            errorElement.classList.add('hidden');
+            inputField.parentNode.appendChild(errorElement);
+
+            inputField.addEventListener('input', function () {
+                const value = parseFloat(inputField.value);
+                const isValid = !isNaN(value) && value >= validationConfig[id].min && value <=
+                    validationConfig[id].max;
+                if (!isValid) {
+                    errorElement.textContent = validationConfig[id].errorMsg;
+                    errorElement.classList.remove('hidden');
+                } else {
+                    errorElement.classList.add('hidden');
+                }
+            });
+        }
+
+        // Validate each field using the above function
+        Object.keys(validationConfig).forEach(validateField);
+
+    });
+</script>
+{% endblock content %}

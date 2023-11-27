@@ -1,0 +1,217 @@
+{% extends 'basedashboard.html' %}
+{% block content%}
+<div class="grid grid-cols-6">
+    <div class=" h-full hidden md:block">
+        <!-- <SideBar3 /> -->
+        <div class="shadow sticky top-[3.5rem]  pt-5">
+            <div class="flex  items-center ml-3">
+                <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24" alt="">
+               </div>
+                <div class="  ml-4 font-bold text-2xl md:text-xl text-green-600">Menu</div>
+            </div>
+            <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                <div class=" gap-4 flex flex-col  mt-3 lg:p-6 p-2 ">
+
+                    <a href="{{url_for('dashboards.dashboard')}}"><button
+                        class="md:text-[10px]  lg:text-[14px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                    font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg ">
+                        <span class="mr-3 "><img src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                alt=""></span>
+                      Dashboard
+                    </button></a>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- <SideBar3 /> -->
+    </div>
+
+
+    <div class="col-span-6 m-5 md:col-span-5 ">
+        {% if message %}
+        <center class="text-red-400">{{ message }}</center>
+        {% endif %}
+        <!--  -->
+
+        <div id="sidebar"
+            class="flex-col mt-14 md:hidden flex sidebar bg-white text-white w-64 h-full fixed top-0 left-0 transform -translate-x-full transition duration-300 ease-in-out">
+            <button id="closeSidebarButton"
+                class="ml-[14rem] mt-2 bg-red-500 hover:bg-red-700 h-6 text-white font-bold w-5  rounded">
+                X
+            </button>
+            <div>
+                <div class="       shadow  pt-5">
+                    <div class="flex  items-center ml-3">
+                        <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24"
+                                alt=""></div>
+                        <div class="  ml-4 font-bold text-2xl  text-green-600">Menu</div>
+
+                    </div>
+                    <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                        <div class=" gap-4 flex flex-col  items-center  mt-3  p-2 ">
+
+                            <a href="{{url_for('dashboards.dashboard')}}"> <button
+                                class=" md:text-[10px]  lg:text-[14px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                      font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100    px-6  p-3  rounded-lg ">
+                                <span class="mr-2 "><img src="{{ url_for('static', filename='images/webpage.png') }}"
+                                        width="25" alt=""></span>
+                                 Dashboard
+                            </button></a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!--  -->
+
+        <div class="w-full  bg-white p-6 rounded-lg shadow-xl">
+
+            <div class="flex gap-4 mb-4 -ml-4 md:ml-0">
+
+
+                <button id="openSidebarButton"
+                    class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                    <div class=" pl-2 hover:w-26"><img src="{{ url_for('static', filename='images/more.png') }}" width="28" alt=""></div>
+                </button>
+                <h2 class="text-2xl  font-semibold ">Create Admin </h2>
+            </div>
+
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="block text-[18px] text-gray-700 font-semibold ">Username <span class="text-red-500">*</span>:</label>
+                    <input type="text" name="username" id="username"
+                        class="mt-1 text-gray-700 text-[14px] px-2 py-1 w-full  border border-gray-500 rounded-md  focus:ring focus:ring-green-300"
+                        required />
+                        <p id="usernameError" class="hidden text-red-500 text-sm mt-1">Username must contain only letters.</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-[18px] font-semibold">Email <span class="text-red-500">*</span> :</label>
+                    <input type="email" name="email" id="email"
+                        class="text-gray-700 px-2 py-1 w-full  border border-gray-500 rounded-md focus:ring focus:ring-green-300"
+                        />
+                        <p id="emailError" class="hidden text-red-500 text-sm mt-1">Please select a valid email.</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-[18px] font-semibold">Center<span class="text-red-500">*</span>:</label>
+                    <select name="department" id="labcenter"
+                        class="mt-1 text-[14px] px-2 py-1 w-full border border-gray-500 rounded-md focus:ring focus:ring-green-300" required>
+                        <option value="" disabled selected>Select Center</option>
+                        
+                       
+                    </select>
+                </div>
+
+
+                
+                <div class="mb-4">
+                    <label class="block text-[18px] text-gray-700 font-semibold">Phone Number<span class="text-red-500">*</span> :</label>
+                    <input type="tel" name="phone_number" id="phone_number"
+                        class="mt-1 text-gray-700 px-2 py-1 text-[14px] w-full  border border-gray-500 rounded-md focus:ring focus:ring-green-300" required/>
+                        <p id="phoneNumberError" class="hidden text-red-500 text-sm mt-1">Phone number should be 10 digits.</p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-[18px] text-gray-700 font-semibold">Password <span class="text-red-500">*</span>:</label>
+                    <input type="password" name="password"
+                        class="mt-1 text-gray-700 px-2 py-1 w-full text-[14px]  border border-gray-500 rounded-md focus:ring focus:ring-green-300" required/>
+                </div>
+                <input type="submit" value="Create Admin"
+                    class="bg-gradient-to-l from-green-600 transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100 bg-green-500 text-white py-2 px-4 rounded focus:outline-none focus:ring focus:ring-green-300">
+            </form>
+        </div>
+    </div>
+</div> 
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const openSidebarButton = document.getElementById("openSidebarButton");
+      const closeSidebarButton = document.getElementById("closeSidebarButton");
+      const sidebar = document.getElementById("sidebar");
+  
+      openSidebarButton.addEventListener("click", function () {
+        sidebar.classList.add("translate-x-0");
+      });
+  
+      closeSidebarButton.addEventListener("click", function () {
+        sidebar.classList.remove("translate-x-0");
+      });
+      // Fetch Lab Centers
+    fetch('/api/labcenters')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok: " + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const labcenterSelect = document.getElementById('labcenter');
+        data.forEach(labcenter => {
+            const option = document.createElement('option');
+            option.value = labcenter.id;
+            option.textContent = labcenter.value;
+            labcenterSelect.appendChild(option);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("Failed to fetch lab centers. Please refresh the page.");
+    });
+
+
+        // Username validation
+    document.getElementById('username').addEventListener('input', function(event) {
+        const usernameInput = event.target;
+        const usernameErrorElement = document.getElementById('usernameError');
+        const lettersOnlyRegex = /^[A-Za-z]+$/;
+        
+        if (!lettersOnlyRegex.test(usernameInput.value)) {
+            usernameErrorElement.classList.remove('hidden');
+            usernameInput.classList.add('border-red-500');
+        } else {
+            usernameErrorElement.classList.add('hidden');
+            usernameInput.classList.remove('border-red-500');
+        }
+    });
+
+    // Email validation
+    document.getElementById('email').addEventListener('input', function(event) {
+        const emailInput = event.target;
+        const emailErrorElement = document.getElementById('emailError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        if (!emailRegex.test(emailInput.value)) {
+            emailErrorElement.classList.remove('hidden');
+            emailInput.classList.add('border-red-500');
+        } else {
+            emailErrorElement.classList.add('hidden');
+            emailInput.classList.remove('border-red-500');
+        }
+    });
+
+    // Phone number validation
+    document.getElementById('phone_number').addEventListener('input', function(event) {
+        const phoneInput = event.target;
+        const phoneErrorElement = document.getElementById('phoneNumberError');
+        const phoneRegex = /^\d{10}$/;
+        
+        if (!phoneRegex.test(phoneInput.value)) {
+            phoneErrorElement.classList.remove('hidden');
+            phoneInput.classList.add('border-red-500');
+        } else {
+            phoneErrorElement.classList.add('hidden');
+            phoneInput.classList.remove('border-red-500');
+        }
+    });
+
+
+      
+    });
+  </script>
+{%  endblock content %}

@@ -1,0 +1,681 @@
+{% extends "basedashboard.html" %}
+
+
+{% block extra_css %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+{% endblock %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+<div class="grid grid-cols-6">
+    <div class=" h-full hidden md:block">
+        <!-- <SideBar3 /> -->
+        <div class="shadow sticky top-[3.5rem]  pt-5">
+            <div class="flex  items-center ml-3">
+                <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24" alt="">
+                </div>
+                <div class="  ml-4 font-bold text-2xl md:text-xl text-green-600">Menu</div>
+            </div>
+            <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                <div class=" gap-4 flex flex-col  mt-3 lg:p-6 p-2 ">
+
+                    <a href="{{url_for('dashboards.dashboard')}}"> <button
+                        class="md:text-[10px]  lg:text-[15px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                    font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg ">
+                        <span class="mr-3 "><img src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                alt=""></span>
+                        Dashboard
+                    </button></a>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- <SideBar3 /> -->
+    </div>
+
+
+    <div class="col-span-6 m-5 md:col-span-5 ">
+        {% if message %}
+        <center class="text-red-400">{{ message }}</center>
+        {% endif %}
+        <!--  -->
+
+        <div id="sidebar"
+            class="flex-col mt-14 md:hidden flex sidebar bg-white text-white w-64 h-full fixed top-0 left-0 transform -translate-x-full transition duration-300 ease-in-out">
+            <button id="closeSidebarButton"
+                class="ml-[14rem] mt-2 bg-red-500 hover:bg-red-700 h-6 text-white font-bold w-5  rounded">
+                X
+            </button>
+            <div>
+                <div class="       shadow  pt-5">
+                    <div class="flex  items-center ml-3">
+                        <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24"
+                                alt=""></div>
+                        <div class="  ml-4 font-bold text-2xl  text-green-600">Menu</div>
+
+                    </div>
+                    <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                        <div class=" gap-4 flex flex-col  items-center  mt-3  p-2 ">
+
+                            <a href="{{url_for('dashboards.dashboard')}}"> <button
+                                class=" md:text-[10px]  lg:text-[14px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                      font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100    px-6  p-3  rounded-lg ">
+                                <span class="mr-2 "><img src="{{ url_for('static', filename='images/webpage.png') }}"
+                                        width="25" alt=""></span>
+                                Dashboard
+                            </button></a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!--  -->
+
+        <div class="w-full  bg-white p-6 rounded-lg shadow-xl">
+
+            <div class="flex gap-4 mb-4 -ml-4 md:ml-0">
+
+
+                <button id="openSidebarButton"
+                    class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                    <div class=" pl-2 hover:w-26"><img src="{{ url_for('static', filename='images/more.png') }}"
+                            width="28" alt=""></div>
+                </button>
+                <h2 class="text-2xl  font-semibold ">Setup form </h2>
+            </div>
+
+            <!--  -->
+
+
+            <!-- <h1>Dashboard</h1> -->
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label for="fruit" class="font-semibold  text-[15px] lg:text-[18px]">Host : </label>
+                    <select id="fruitSelect"
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        name="fruit">
+                        <option value="default">Please select</option>
+                        {% for option in host_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        hidden="hidden" , value="" id="tk">
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="customFruit">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="edit">Edit</button>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="del">Del</button>
+                </div>
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Host: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="addhost">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="add">Add</button>
+                </div>
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px]  mt-2" for="DiagnosticTest">Diagnostic Test:
+                    </label>
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="DiagnosticTest" name="suspectProblems">
+                        <option value="DiagnosticTestdefault">Please select</option>
+                        {% for option in DiagnosticTest_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        hidden="hidden" , value="" id="tk">
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="DiagnosticTesttext">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosticTestedit">Edit</button class="border-2">
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosticTestdel">Del</button>
+                </div>
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add DiagnosticTest: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="DiagnosticTesttextadd">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosticTestadd">Add</button>
+                </div>
+
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="suspectProblem">Suspected Problem:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="suspectProblem" name="suspectProblems">
+                        <option value="suspectProblemdefault">Please select</option>
+                        {% for option in suspectProblem_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="suspectProblemtext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="suspectProblemedit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="suspectProblemdel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add SuspectedProblem: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="suspectProblemtextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="suspectProblemadd">Add</button>
+                </div>
+            </div>
+
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row  bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px]" for="SampleMaterialsSubmitted">Sample
+                        Materials Submitted: </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="SampleMaterialsSubmitted" name="suspectProblems">
+                        <option value="SampleMaterialsSubmitteddefault">Please select</option>
+                        {% for option in SampleMaterialsSubmittedData_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="SampleMaterialsSubmittedtext">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SampleMaterialsSubmittededit">Edit</button>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SampleMaterialsSubmitteddel">Del</button>
+                </div>
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row  bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Sample MaterialSubmitted: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="SampleMaterialsSubmittedtextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SampleMaterialsSubmittedadd">Add</button>
+                </div>
+            </div>
+
+
+
+
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row  bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px]" for="LabCenter">Lab Center: </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="LabCenter" name="suspectProblems">
+                        <option value="LabCenterdefault">Please select</option>
+                        {% for option in LabCenterData_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="LabCentertext">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="LabCenteredit">Edit</button>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="LabCenterdel">Del</button>
+                </div>
+            </div>
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row  bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Lab Center: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="LabCentertextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="LabCenteradd">Add</button>
+                </div>
+            </div>
+
+
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="DiagnosisName">Diagnosis Name:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="DiagnosisName" name="suspectProblems">
+                        <option value="DiagnosisNamedefault">Please select</option>
+                        {% for option in DiagnosisName_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="DiagnosisNametext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosisNameedit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosisNamedel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Diagnosis Name: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="DiagnosisNametextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="DiagnosisNameadd">Add</button>
+                </div>
+            </div>
+
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="NematodeExtraction">Nematode Extraction:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="NematodeExtraction" name="suspectProblems">
+                        <option value="NematodeExtractiondefault">Please select</option>
+                        {% for option in NematodeExtraction_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="NematodeExtractiontext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="NematodeExtractionedit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="NematodeExtractiondel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Nematode Extraction: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="NematodeExtractiontextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="NematodeExtractionadd">Add</button>
+                </div>
+            </div>
+
+
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="GenusLabMethods">Genus Lab Methods:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="GenusLabMethods" name="suspectProblems">
+                        <option value="GenusLabMethodsdefault">Please select</option>
+                        {% for option in GenusLabMethods_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="GenusLabMethodstext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="GenusLabMethodsedit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="GenusLabMethodsdel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Genus Lab Methods: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="GenusLabMethodstextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="GenusLabMethodsadd">Add</button>
+                </div>
+            </div>
+
+
+
+
+            
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="SpecimenPreserved">Specimen Preserved:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="SpecimenPreserved" name="suspectProblems">
+                        <option value="SpecimenPreserveddefault">Please select</option>
+                        {% for option in SpecimenPreserved_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="SpecimenPreservedtext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SpecimenPreservededit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SpecimenPreserveddel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Diagnosis Name: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="SpecimenPreservedtextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="SpecimenPreservedadd">Add</button>
+                </div>
+            </div>
+
+
+
+            
+            
+            <hr class="mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2" for="StorageCondition">Storage Condition:
+                    </label>
+
+                    <select
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        id="StorageCondition" name="suspectProblems">
+                        <option value="StorageConditiondefault">Please select</option>
+                        {% for option in StorageCondition_list %}
+                        <option value="{{ option['id'] }}">{{ option['value'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="StorageConditiontext">
+                </div>
+                <div>
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="StorageConditionedit">Edit</button>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="StorageConditiondel">Del</button>
+                </div>
+            </div>
+            <hr class=" mt-2">
+            <div
+                class="flex lg:flex-row bg-gray-100  rounded-md p-3 mt-1 flex-col gap-2 justify-between lg:items-center">
+                <div class="flex flex-col">
+
+                    <label class="font-semibold text-[15px] lg:text-[18px] mt-2">Add Storage Condition: </label>
+                    <input
+                        class="text-[14px]  md:w-full text-green-500 w-full lg:w-[22rem]  px-2 py-1 border border-gray-500 rounded-md focus:outline-none focus:ring focus:border-green-700"
+                        type="text" id="StorageConditiontextadd">
+                </div>
+                <div>
+
+                    <button
+                        class="bg-gradient-to-l from-green-600  bg-green-500 text-white lg:text-[18px]  text-[14px] font-semibold px-2 py-1 rounded-md hover:bg-green-700"
+                        id="StorageConditionadd">Add</button>
+                </div>
+            </div>
+
+
+            
+
+
+
+
+
+
+
+
+            
+
+            <hr>
+
+
+
+
+
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<script>
+    document.AddEventListener("DOMContentLoaded", function () {
+        const openSidebarButton = document.getElementById("openSidebarButton");
+        const closeSidebarButton = document.getElementById("closeSidebarButton");
+        const sidebar = document.getElementById("sidebar");
+
+        openSidebarButton.AddEventListener("click", function () {
+            sidebar.classList.Add("translate-x-0");
+        });
+
+        closeSidebarButton.AddEventListener("click", function () {
+            sidebar.classList.remove("translate-x-0");
+        });
+    });
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- this will Add scripts to the base script block -->
+<script src="{{ url_for('static', filename='script/host.js') }}"></script>
+<script src="{{ url_for('static', filename='script/diagnosticTest.js') }}"></script>
+<script src="{{ url_for('static', filename='script/suspectProblem.js') }}"></script>
+<script src="{{ url_for('static', filename='script/SampleMaterialsSubmitted.js') }}"></script>
+<script src="{{ url_for('static', filename='script/LabCenter.js') }}"></script>
+<script src="{{ url_for('static', filename='script/DiagnosisName.js') }}"></script>
+<script src="{{ url_for('static', filename='script/NematodeExtraction.js') }}"></script>
+<script src="{{ url_for('static', filename='script/GenusLabMethods.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='script/specimenPreserved.js') }}"></script>
+<script src="{{ url_for('static', filename='script/storageCondition.js') }}"></script>
+{% endblock %}

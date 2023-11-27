@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Documentation: National Plant Pathology Research Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+
+<body class="bg-cover bg-center relative" style="background-image: url('/static/images/land.jpg')">
+
+    <div class="container mx-auto mt-16 max-w-5xl">
+
+        <h1 class="text-4xl font-bold text-center mb-8 text-white">System Documentation</h1>
+        <div class="bg-white p-8 rounded-md">
+
+            <!-- Introduction -->
+            <h2 class="text-2xl font-semibold mb-4">1. Introduction</h2>
+            <p>This documentation covers the functionalities and usage of the National Plant Pathology Research Center system. This system is designed to manage users and the various forms related to national plant diagnostics.</p>
+
+            <!-- System Requirements -->
+            <h2 class="text-2xl font-semibold mt-8 mb-4">2. System Requirements</h2>
+            <h3 class="text-xl mb-2">Software Dependencies:</h3>
+            <ul class="pl-8 list-disc mb-4">
+                <li>blinker==1.6.2</li>
+                <li>certifi==2023.7.22</li>
+                <li>charset-normalizer==3.3.0</li>
+                <li>click==8.1.7</li>
+                <li>colorama==0.4.6</li>
+                <li>dnspython==2.4.2</li>
+                <li>email-validator==2.0.0.post2</li>
+                <li>Flask==2.3.3</li>
+                <li>Flask-Assets==2.0</li>
+                <li>Flask-Login==0.6.2</li>
+                <li>Flask-Mail==0.9.1</li>
+                <li>Flask-SQLAlchemy==3.1.1</li>
+                <li>Flask-WTF==1.1.1</li>
+                <li>greenlet==3.0.0</li>
+                <li>idna==3.4</li>
+                <li>itsdangerous==2.1.2</li>
+                <li>Jinja2==3.1.2</li>
+                <li>MarkupSafe==2.1.3</li>
+                <li>requests==2.31.0</li>
+                <li>SQLAlchemy==2.0.21</li>
+                <li>typing_extensions==4.8.0</li>
+                <li>urllib3==2.0.6</li>
+                <li>webassets==2.0</li>
+                <li>Werkzeug==2.3.7</li>
+                <li>WTForms==3.0.1</li>
+            </ul>
+
+            <!-- Role-Based Features -->
+            <h2 class="text-2xl font-semibold mt-8 mb-4">3. Role-Based Features</h2>
+
+            <!-- Superuser Features -->
+            <h3 class="text-xl mb-2">3.1 Superuser Features:</h3>
+            <ul class="pl-8 list-disc mb-4">
+                <li>Ability to create admin accounts.</li>
+                <li>Enable or disable admin accounts.</li>
+                <li>View each user created by admins.</li>
+                <li>View system-generated charts.</li>
+                <li>Setup and modify forms.</li>
+                <li>CRUD operations on form values in the database.</li>
+            </ul>
+
+            <!-- Admin Features -->
+            <h3 class="text-xl mb-2">3.2 Admin Features:</h3>
+            <ul class="pl-8 list-disc mb-4">
+                <li>Create user accounts.</li>
+                <li>Enable or disable user accounts.</li>
+                <li>View and edit list of forms created by users.</li>
+                <li>View system-generated charts.</li>
+                <li>Setup and modify forms.</li>
+                <li>CRUD operations on form values in the database.</li>
+                <li>Send messages to farmers.</li>
+                <li>View list of sent messages.</li>
+                <li>Download forms as PDF and Excel.</li>
+            </ul>
+
+            <!-- User Features -->
+            <h3 class="text-xl mb-2">3.3 User Features:</h3>
+            <ul class="pl-8 list-disc mb-4">
+                <li>Fill out the National Plant Diagnostic Form.</li>
+                <li>Send messages to farmers.</li>
+                <li>Edit and view list of forms they've created.</li>
+                <li>View list of received messages.</li>
+                <li>Download forms as PDF and Excel.</li>
+            </ul>
+
+            <!-- Installation Guide -->
+<h2 class="text-2xl font-semibold mt-8 mb-4">4. Installation Guide</h2>
+<p>This guide will walk you through the process of setting up the required dependencies for the National Plant Pathology Research Center system.</p>
+
+<h3 class="text-xl mb-2">1. Setting up a Virtual Environment (Optional but Recommended):</h3>
+<p>Before installing the dependencies, it's a good practice to set up a virtual environment to keep your project's dependencies isolated:</p>
+<pre class="bg-gray-100 p-4 rounded">
+<code>
+python -m venv myenv
+source myenv/bin/activate  # On Windows, use: myenv\Scripts\activate
+</code>
+</pre>
+
+<h3 class="text-xl mb-2">2. Installing Dependencies:</h3>
+<p>With your environment set up and activated, you can install the required dependencies:</p>
+<pre class="bg-gray-100 p-4 rounded">
+<code>
+pip install blinker==1.6.2 certifi==2023.7.22 charset-normalizer==3.3.0  and so on
+</code>
+</pre>
+
+<h3 class="text-xl mb-2">3. Setting up the Flask Application:</h3>
+<p>Once all dependencies are installed, navigate to the root directory of your project and execute the following:</p>
+<pre class="bg-gray-100 p-4 rounded">
+<code>
+export FLASK_APP=app.py  # Use set FLASK_APP=app.py on Windows
+flask run
+
+Or, 
+
+python app.py 
+</code>
+</pre>
+<p>This will start the Flask server, and your application should be accessible at <code>http://127.0.0.1:5000/</code>.</p>
+
+
+<!-- User Guide -->
+<h2 class="text-2xl font-semibold mt-8 mb-4">5. User Guide</h2>
+
+<h3 class="text-xl mb-2">1. Superuser Guide:</h3>
+<p>The superuser has the highest level of access and control over the system. As a superuser, you can:</p>
+<ul class="pl-8 list-disc">
+    <li>Create, enable, or disable admin accounts.</li>
+    <li>View each user created by admins.</li>
+    <li>View charts and analytics related to system use.</li>
+    <li>Setup forms, with the ability to add, delete, or edit form values in the database.</li>
+</ul>
+
+<h3 class="text-xl mb-2">2. Admin Guide:</h3>
+<p>Admins have extensive control over the system but slightly less than the superuser. As an admin, you can:</p>
+<ul class="pl-8 list-disc">
+    <li>Create, enable, or disable user accounts.</li>
+    <li>View and edit the list of forms created by each user.</li>
+    <li>View charts and analytics related to form submissions and user activity.</li>
+    <li>Setup forms, with the ability to add, delete, or edit form values in the database.</li>
+    <li>Send messages to farmers and view a list of all sent messages.</li>
+    <li>Download each form as a PDF or Excel file for offline access and reporting.</li>
+</ul>
+
+<h3 class="text-xl mb-2">3. User Guide:</h3>
+<p>General users have specific access rights geared towards data submission and communication. As a user, you can:</p>
+<ul class="pl-8 list-disc">
+    <li>Fill out the National Plant Diagnostic Form.</li>
+    <li>Send messages to farmers and view a list of all sent and received messages.</li>
+    <li>Edit and view the list of forms you've submitted.</li>
+    <li>Download each form as a PDF or Excel file for offline access and reference.</li>
+</ul>
+
+
+
+           <!-- Technical Specifications -->
+<h2 class="text-2xl font-semibold mt-8 mb-4">6. Technical Specifications</h2>
+
+<h3 class="text-xl mb-2">Hardware Requirements:</h3>
+<ul class="pl-8 list-disc mb-4">
+    <li>Processor: Minimum dual-core, recommended quad-core or better.</li>
+    <li>Memory: Minimum 4GB RAM, recommended 8GB or higher.</li>
+    <li>Storage: SSD with at least 50GB of free space.</li>
+    <li>Network: Stable internet connection for online features.</li>
+</ul>
+
+<h3 class="text-xl mb-2">Operating System:</h3>
+<p>Compatible with Windows, Linux, and macOS. Ensure that you have the latest patches and updates installed for your OS.</p>
+
+<h3 class="text-xl mb-2">Supported Browsers:</h3>
+<ul class="pl-8 list-disc mb-4">
+    <li>Google Chrome (latest version)</li>
+    <li>Mozilla Firefox (latest version)</li>
+    <li>Microsoft Edge (latest version)</li>
+    <li>Safari (latest version for macOS)</li>
+</ul>
+
+<h3 class="text-xl mb-2">Additional Requirements:</h3>
+<p>Ensure you have administrative rights on your machine to install necessary software and libraries. An active internet connection is also required for certain online functionalities.</p>
+
+
+
+
+<h2 class="text-2xl font-semibold mt-8 mb-4">7. Tips and Best Practices</h2>
+<p>Always keep your software dependencies updated to benefit from the latest security patches and feature updates. Regular backups of the system database are highly recommended to prevent data loss. Ensure to maintain confidentiality and privacy when handling user data and communications.</p>
+
+<div class="mt-10 text-center">
+    <a href="{{url_for('auth.login')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Back to Login</a>
+</div>
+        </div>
+    </div>
+
+
+    
+
+    <div class="mt-20 mb-2 text-center">
+        <span class="font-bold text-white block">All Rights Reserved @2023 NARC</span>
+        <span class="font-bold text-white block mt-1">Designed and Developed by <a class="hover:underline" href="https://kheti.farm/" target="_blank">DV EXCELLUS</a> | Kisan Care</span>
+    </div>
+     <!-- Developed By Information -->
+     <div class="absolute bottom-0 right-0 mb-2 mr-2 text-base text-white">
+        Developer: Anup Giri
+    </div>
+
+
+</body>
+
+</html>

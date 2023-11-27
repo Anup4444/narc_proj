@@ -1,0 +1,169 @@
+
+<!--  -->
+
+
+<!--  -->
+<!--  -->
+{% extends "basedashboard.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+
+{% endblock %}
+
+{% block content %}
+
+<div class="grid grid-cols-6">
+    <div class=" h-full hidden md:block">
+        <!-- <SideBar3 /> -->
+        <div class="shadow sticky top-[3.5rem]  pt-5">
+            <div class="flex  items-center ml-3">
+                <div class="ml-2"><img src="{{ url_for('static', filename='images/list.png') }}" width="24" alt="">
+                </div>
+                <div class="  ml-4 font-bold text-2xl md:text-xl text-green-600">Menu</div>
+            </div>
+            <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                <div class=" gap-4 flex flex-col items-center mt-3 p-2 ">
+
+                    <a href="{{url_for('dashboards.dashboard')}}"> <button
+                        class=" md:text-[10px]  lg:text-[16px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                    font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg ">
+                        <span class="mr-3 "><img src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                alt=""></span>
+                        Dashboard
+                    </button></a>
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!-- <SideBar3 /> -->
+    </div>
+    <div class="col-span-6 m-5 md:col-span-5 ">
+        <!--  -->
+
+        <div id="sidebar"
+            class="flex-col z-10 mt-14 md:hidden flex sidebar bg-white text-white w-64 h-full fixed top-0 left-0 transform -translate-x-full transition duration-300 ease-in-out">
+            <button id="closeSidebarButton"
+                class="ml-[14rem] mt-2 bg-red-500 hover:bg-red-700 h-6 text-white font-bold w-5  rounded">
+                X
+            </button>
+            <div>
+                <div class="       shadow  pt-5">
+                    <div class="flex  items-center ml-3">
+                        <div class="ml-2"><img src="/images/list.png" width="24" alt=""></div>
+                        <div class="  ml-4 font-bold text-2xl  text-green-600">Menu</div>
+
+                    </div>
+                    <div class="border shadow-xl rounded-lg m-4 h-[37rem]">
+                        <div class=" gap-4 flex flex-col  items-center  mt-3  p-2 ">
+
+                            <a href="{{url_for('dashboards.dashboard')}}"> <button
+                                class=" md:text-[10px]  lg:text-[16px] flex items-center  justify-center  transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-100  
+                            font-semibold hover:text-black hover:bg-gray-100  border text-gray-700 bg-gray-100     lg:px-4 lg:p-3 p-1  rounded-lg ">
+                                <span class="mr-3 "><img src="{{ url_for('static', filename='images/webpage.png') }}" width="25"
+                                        alt=""></span>
+                                Dashboard
+                            </button></a>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--  -->
+        {% if message %}
+        <center class="text-red-400">{{ message }}</center>
+        {% endif %}
+        <div class="w-full  bg-white p-6 rounded-lg shadow-lg">
+
+            <!--  -->
+            <div class="flex gap-4 mb-4 -ml-4 md:ml-0">
+
+
+                <button id="openSidebarButton"
+                    class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                    <div class=" pl-2 hover:w-26"><img src="{{ url_for('static', filename='images/more.png') }}"
+                            width="28" alt=""></div>
+                </button>
+                <!--  -->
+                <div class="flex gap-4 mb-4 -ml-4 md:ml-0">
+
+
+                    <button id="openSidebarButton"
+                        class="md:hidden justify-center items-center flex hover:bg-gray-200 text-white font-bold py-1 px-2 rounded">
+                        <!-- <div class=" pl-2 hover:w-26"><img src="{{ url_for('static', filename='images/user.png') }}"
+                                width="28" alt=""></div> -->
+                    </button>
+                    <h2 class="text-2xl mt-2 font-semibold ">Message list</h2>
+                </div>
+                <!--  -->
+            </div>
+           
+            <!-- DataTable -->
+            <div class="lg:mt-6 mt-2 overflow-x-auto" >
+            <table id="messagesTable" class="display border border-gray-500 table-auto lg:mt-2 overflow-x-scroll   w-full ">
+                <thead>
+                    <tr>
+                        <th>Farmer Name</th>
+                        <th>Message Type</th>
+                        <th>Host</th>
+                        <th>Date</th>
+                        
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for message in messages %}
+                    <tr>
+                        <td>{{ message.username }}</td>
+                        <td>{{ message.message_type }}</td>
+                        
+                        <td>{{ message.host.value }}</td>
+                        <td>{{ message.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ message.email }}</td>
+                    
+                        
+                        <td>{{message.phone_number}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+        
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const openSidebarButton = document.getElementById("openSidebarButton");
+        const closeSidebarButton = document.getElementById("closeSidebarButton");
+        const sidebar = document.getElementById("sidebar");
+
+        openSidebarButton.addEventListener("click", function () {
+            sidebar.classList.add("translate-x-0");
+        });
+
+        closeSidebarButton.addEventListener("click", function () {
+            sidebar.classList.remove("translate-x-0");
+        });
+    });
+    // 
+            $(document).ready( function () {
+            $('#messagesTable').DataTable(
+                {order: [[3, 'desc'], [1, 'asc']]}// Sort by the 3rd column (Date), in descending order
+            );
+        } );
+</script>
+{% endblock %}
